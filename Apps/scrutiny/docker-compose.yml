@@ -1,0 +1,44 @@
+---
+name: igorlabs-scrutiny
+services:
+  scrutiny:
+    container_name: scrutiny
+    image: ghcr.io/analogj/scrutiny:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 2080:8080
+      - 2086:8086
+    volumes:
+      - /run/udev:/run/udev:ro
+      - /DATA/AppData/$AppID/opt/scrutiny/config:/opt/scrutiny/config
+      - /DATA/AppData/$AppID/opt/scrutiny/influxdb:/opt/scrutiny/influxdb
+    devices:
+      - /dev/sda:/dev/sda
+      - /dev/sdb:/dev/sdb
+    cap_add:
+      - SYS_RAWIO
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/api/health
+      start_period: 15s
+      interval: 30s
+      timeout: 30s
+      retries: 3
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: scrutiny
+  developer: AnalogJ
+  category: Monitoring
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/scrutiny.png
+  index: /
+  port_map: "2080"
+  scheme: http
+  title:
+    custom: Scrutiny
+    en_us: Scrutiny

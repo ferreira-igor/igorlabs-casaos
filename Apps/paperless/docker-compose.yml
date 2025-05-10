@@ -1,0 +1,114 @@
+---
+name: igorlabs-paperless
+services:
+  paperless_app:
+    container_name: paperless_app
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - paperless_database
+      - paperless_broker
+      - paperless_gotenberg
+      - paperless_tika
+    networks:
+      - paperless
+    ports:
+      - 8000:8000
+    volumes:
+      - /DATA/AppData/$AppID/usr/src/paperless/data:/usr/src/paperless/data
+      - /DATA/AppData/$AppID/usr/src/paperless/media:/usr/src/paperless/media
+      - /DATA/AppData/$AppID/usr/src/paperless/export:/usr/src/paperless/export
+      - /DATA/AppData/$AppID/usr/src/paperless/consume:/usr/src/paperless/consume
+    environment:
+      - PAPERLESS_REDIS=redis://paperless_broker:6379
+      - PAPERLESS_DBENGINE=mariadb
+      - PAPERLESS_DBHOST=paperless_database
+      - PAPERLESS_DBUSER=paperless
+      - PAPERLESS_DBPASS=paperless
+      - PAPERLESS_DBPORT=3306
+      - PAPERLESS_TIKA_ENABLED=1
+      - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://paperless_gotenberg:3000
+      - PAPERLESS_TIKA_ENDPOINT=http://paperless_tika:9998
+      - USERMAP_UID=$PUID
+      - USERMAP_GID=$PGID
+      - PAPERLESS_TIME_ZONE=$TZ
+      - PAPERLESS_OCR_LANGUAGE=eng
+      - PAPERLESS_OCR_LANGUAGES=por
+  paperless_database:
+    container_name: paperless_database
+    image: mariadb:lts
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+    environment:
+      - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_ROOT_PASSWORD=insecure
+      - MARIADB_DATABASE=paperless
+      - MARIADB_USER=paperless
+      - MARIADB_PASSWORD=paperless
+    command:
+      - --innodb-buffer-pool-size=512M
+      - --transaction-isolation=READ-COMMITTED
+      - --log-bin=binlog
+      - --binlog-format=ROW
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    healthcheck:
+      test:
+        - CMD
+        - healthcheck.sh
+        - --connect
+        - --innodb_initialized
+      start_period: 15s
+      interval: 30s
+      timeout: 30s
+      retries: 3
+  paperless_broker:
+    container_name: paperless_broker
+    image: redis:latest
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    command:
+      - redis-server
+      - --save 60 1
+      - --loglevel warning
+  paperless_gotenberg:
+    container_name: paperless_gotenberg
+    image: gotenberg/gotenberg:latest
+    restart: unless-stopped
+    networks:
+      - paperless
+    command:
+      - gotenberg
+      - --chromium-disable-javascript=true
+      - --chromium-allow-list=file:///tmp/.*
+  paperless_tika:
+    container_name: paperless_tike
+    image: apache/tika:latest
+    restart: unless-stopped
+    networks:
+      - paperless
+networks:
+  paperless:
+    external: true
+    name: paperless
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: paperless_app
+  developer: docs.paperless-ngx.com
+  category: Document Management
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/paperless-ngx.png
+  index: /
+  port_map: "8000"
+  scheme: http
+  title:
+    custom: Paperless-ngx
+    en_us: Paperless-ngx

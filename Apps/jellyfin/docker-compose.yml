@@ -1,0 +1,49 @@
+---
+name: igorlabs-jellyfin
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
+    restart: unless-stopped
+    networks:
+      - servarr
+    ports:
+      - 8096:8096
+      - 7359:7359/udp
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/data:/data
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+    devices:
+      - /dev/dri:/dev/dri
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8096/health
+      start_period: 15s
+      interval: 30s
+      timeout: 30s
+      retries: 3
+networks:
+  servarr:
+    external: true
+    name: servarr
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: jellyfin
+  developer: jellyfin.org
+  category: Streaming
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/jellyfin.png
+  index: /
+  port_map: "8096"
+  scheme: http
+  title:
+    custom: Jellyfin
+    en_us: Jellyfin
