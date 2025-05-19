@@ -17,6 +17,8 @@ x-casaos:
   main: dozzle
   developer: dozzle.dev
   category: Logs
+  description:
+    en_us: $AppID
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/dozzle.png
   index: /
   port_map: "7070"
