@@ -1,12 +1,17 @@
----
 name: igorlabs-qbittorrent
+
+networks:
+  arr_net:
+    external: true
+    name: arr_net
+
 services:
   qbittorrent:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
     restart: unless-stopped
     networks:
-      - servarr
+      - arr_net
     ports:
       - 8080:8080
     volumes:
@@ -31,10 +36,8 @@ services:
       - NET_ADMIN
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-networks:
-  servarr:
-    external: true
-    name: servarr
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

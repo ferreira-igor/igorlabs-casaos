@@ -1,12 +1,17 @@
----
 name: igorlabs-radarr
+
+networks:
+  arr_net:
+    external: true
+    name: arr_net
+
 services:
   radarr:
     container_name: radarr
     image: lscr.io/linuxserver/radarr:latest
     restart: unless-stopped
     networks:
-      - servarr
+      - arr_net
     ports:
       - 7878:7878
     volumes:
@@ -16,10 +21,8 @@ services:
       - TZ=$TZ
       - PUID=$PUID
       - PGID=$PGID
-networks:
-  servarr:
-    external: true
-    name: servarr
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

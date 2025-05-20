@@ -1,12 +1,17 @@
----
 name: igorlabs-prowlarr
+
+networks:
+  arr_net:
+    external: true
+    name: arr_net
+
 services:
   prowlarr:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
     restart: unless-stopped
     networks:
-      - servarr
+      - arr_net
     ports:
       - 9696:9696
     volumes:
@@ -15,10 +20,8 @@ services:
       - TZ=$TZ
       - PUID=$PUID
       - PGID=$PGID
-networks:
-  servarr:
-    external: true
-    name: servarr
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

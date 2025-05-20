@@ -1,5 +1,5 @@
----
 name: igorlabs-dozzle
+
 services:
   dozzle:
     container_name: dozzle
@@ -7,9 +7,11 @@ services:
     restart: unless-stopped
     network_mode: bridge
     ports:
-      - 7070:8080
+      - 2020:8080
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64
@@ -17,11 +19,9 @@ x-casaos:
   main: dozzle
   developer: dozzle.dev
   category: Logs
-  description:
-    en_us: $AppID
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/dozzle.png
   index: /
-  port_map: "7070"
+  port_map: "2020"
   scheme: http
   title:
     custom: Dozzle

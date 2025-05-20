@@ -1,17 +1,21 @@
----
 name: igorlabs-photoprism
+
+networks:
+  photoprism_net:
+    external: true
+    name: photoprism_net
+
 services:
   photoprism_app:
     container_name: photoprism_app
     image: photoprism/photoprism:latest
     restart: unless-stopped
     networks:
-      - photoprism
+      - photoprism_net
     ports:
       - 2342:2342
     depends_on:
-      photoprism_database:
-        condition: service_healthy
+      - photoprism_database
     volumes:
       - /DATA/AppData/$AppID/storage:/photoprism/storage
       - /DATA/AppData/$AppID/import:/photoprism/import
@@ -25,15 +29,19 @@ services:
       - PHOTOPRISM_DATABASE_NAME=photoprism
       - PHOTOPRISM_DATABASE_USER=photoprism
       - PHOTOPRISM_DATABASE_PASSWORD=photoprism
+    devices:
+      - /dev/dri:/dev/dri
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
+    stop_grace_period: 1min
+
   photoprism_database:
     container_name: photoprism_database
     image: mariadb:lts
     restart: unless-stopped
     networks:
-      - photoprism
+      - photoprism_net
     volumes:
       - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
     environment:
@@ -53,20 +61,8 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    healthcheck:
-      test:
-        - CMD
-        - healthcheck.sh
-        - --connect
-        - --innodb_initialized
-      start_period: 15s
-      interval: 30s
-      timeout: 30s
-      retries: 3
-networks:
-  photoprism:
-    external: true
-    name: photoprism
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

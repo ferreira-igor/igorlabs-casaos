@@ -1,12 +1,17 @@
----
 name: igorlabs-manyfold
+
+networks:
+  manyfold_net:
+    external: true
+    name: manyfold_net
+
 services:
   manyfold_app:
     container_name: manyfold_app
     image: ghcr.io/manyfold3d/manyfold:latest
     restart: unless-stopped
     networks:
-      - manyfold
+      - manyfold_net
     ports:
       - 3214:3214
     depends_on:
@@ -20,7 +25,7 @@ services:
       - DATABASE_NAME=manyfold
       - DATABASE_USER=manyfold
       - DATABASE_PASSWORD=manyfold
-      - SECRET_KEY_BASE=a_nice_long_random_string
+      - SECRET_KEY_BASE=
       - REDIS_URL=redis://manyfold_broker:6379/1
       - PGID=$PGID
       - PUID=$PUID
@@ -33,34 +38,36 @@ services:
       - DAC_OVERRIDE
       - SETUID
       - SETGID
+    stop_grace_period: 1min
+
   manyfold_database:
     container_name: manyfold_database
     image: postgres:latest
     restart: unless-stopped
     networks:
-      - manyfold
+      - manyfold_net
     volumes:
       - /DATA/AppData/$AppID/var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=manyfold
       - POSTGRES_USER=manyfold
       - POSTGRES_PASSWORD=manyfold
+    stop_grace_period: 1min
+
   manyfold_broker:
     container_name: manyfold_broker
     image: redis:latest
     restart: unless-stopped
     networks:
-      - manyfold
+      - manyfold_net
     volumes:
       - /DATA/AppData/$AppID/data:/data
     command:
       - redis-server
       - --save 60 1
       - --loglevel warning
-networks:
-  manyfold:
-    external: true
-    name: manyfold
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

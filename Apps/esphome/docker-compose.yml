@@ -1,5 +1,5 @@
----
 name: igorlabs-esphome
+
 services:
   esphome:
     container_name: esphome
@@ -8,11 +8,13 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - /DATA/AppData/esphome/config:/config
+      - /DATA/AppData/$AppID/config:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PASSWORD=esphome
       - USERNAME=esphome
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

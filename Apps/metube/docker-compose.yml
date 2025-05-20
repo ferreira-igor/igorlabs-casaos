@@ -1,5 +1,5 @@
----
 name: igorlabs-metube
+
 services:
   metube:
     container_name: metube
@@ -14,6 +14,8 @@ services:
       - UID=$PUID
       - GID=$PGID
       - CUSTOM_DIRS=false
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

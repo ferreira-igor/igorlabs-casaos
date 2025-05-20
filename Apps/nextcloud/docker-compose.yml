@@ -1,19 +1,22 @@
----
 name: igorlabs-nextcloud
+
+networks:
+  nextcloud_net:
+    external: true
+    name: nextcloud_net
+
 services:
   nextcloud_app:
     container_name: nextcloud_app
     image: nextcloud:31
     restart: unless-stopped
     networks:
-      - nextcloud
+      - nextcloud_net
     ports:
-      - 7080:80
+      - 4040:80
     depends_on:
-      nextcloud_database:
-        condition: service_healthy
-      nextcloud_broker:
-        condition: service_started
+      - nextcloud_database
+      - nextcloud_broker
     volumes:
       - /DATA/AppData/$AppID/var/www/html:/var/www/html
     environment:
@@ -23,12 +26,14 @@ services:
       - MYSQL_PASSWORD=nextcloud
       - REDIS_HOST=nextcloud_broker
       - REDIS_HOST_PASSWORD=nextcloud
+    stop_grace_period: 1min
+
   nextcloud_database:
     container_name: nextcloud_database
     image: mariadb:lts
     restart: unless-stopped
     networks:
-      - nextcloud
+      - nextcloud_net
     volumes:
       - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
     environment:
@@ -45,22 +50,14 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    healthcheck:
-      test:
-        - CMD
-        - healthcheck.sh
-        - --connect
-        - --innodb_initialized
-      start_period: 15s
-      interval: 30s
-      timeout: 30s
-      retries: 3
-  nextcloud_cache:
-    container_name: nextcloud_cache
+    stop_grace_period: 1min
+
+  nextcloud_broker:
+    container_name: nextcloud_broker
     image: redis:latest
     restart: unless-stopped
     networks:
-      - nextcloud
+      - nextcloud_net
     volumes:
       - /DATA/AppData/$AppID/data:/data
     command:
@@ -68,10 +65,8 @@ services:
       - --save 60 1
       - --loglevel warning
       - --requirepass nextcloud
-networks:
-  nextcloud:
-    external: true
-    name: nextcloud
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64
@@ -81,7 +76,7 @@ x-casaos:
   category: Cloud Storage
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/nextcloud.png
   index: /
-  port_map: "7080"
+  port_map: "4040"
   scheme: http
   title:
     custom: Nextcloud

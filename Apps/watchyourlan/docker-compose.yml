@@ -1,5 +1,5 @@
----
 name: igorlabs-watchyourlan
+
 services:
   watchyourlan:
     container_name: watchyourlan
@@ -11,6 +11,8 @@ services:
     environment:
       - TZ=$TZ
       - IFACES="enp2s0"
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

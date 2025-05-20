@@ -1,5 +1,10 @@
----
 name: igorlabs-paperless
+
+networks:
+  paperless_net:
+    external: true
+    name: paperless_net
+
 services:
   paperless_app:
     container_name: paperless_app
@@ -11,7 +16,7 @@ services:
       - paperless_gotenberg
       - paperless_tika
     networks:
-      - paperless
+      - paperless_net
     ports:
       - 8000:8000
     volumes:
@@ -21,83 +26,63 @@ services:
       - /DATA/AppData/$AppID/usr/src/paperless/consume:/usr/src/paperless/consume
     environment:
       - PAPERLESS_REDIS=redis://paperless_broker:6379
-      - PAPERLESS_DBENGINE=mariadb
       - PAPERLESS_DBHOST=paperless_database
-      - PAPERLESS_DBUSER=paperless
-      - PAPERLESS_DBPASS=paperless
-      - PAPERLESS_DBPORT=3306
       - PAPERLESS_TIKA_ENABLED=1
       - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://paperless_gotenberg:3000
       - PAPERLESS_TIKA_ENDPOINT=http://paperless_tika:9998
-      - USERMAP_UID=$PUID
-      - USERMAP_GID=$PGID
-      - PAPERLESS_TIME_ZONE=$TZ
+      - PAPERLESS_TIME_ZONE=America/Sao_Paulo
       - PAPERLESS_OCR_LANGUAGE=eng
-      - PAPERLESS_OCR_LANGUAGES=por
+      - PAPERLESS_OCR_LANGUAGEs=por
+    stop_grace_period: 1min
+
   paperless_database:
     container_name: paperless_database
-    image: mariadb:lts
+    image: postgres:latest
     restart: unless-stopped
     networks:
-      - paperless
+      - paperless_net
     volumes:
-      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+      - /DATA/AppData/$AppID/var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
-      - MARIADB_AUTO_UPGRADE=1
-      - MARIADB_ROOT_PASSWORD=insecure
-      - MARIADB_DATABASE=paperless
-      - MARIADB_USER=paperless
-      - MARIADB_PASSWORD=paperless
-    command:
-      - --innodb-buffer-pool-size=512M
-      - --transaction-isolation=READ-COMMITTED
-      - --log-bin=binlog
-      - --binlog-format=ROW
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
-    healthcheck:
-      test:
-        - CMD
-        - healthcheck.sh
-        - --connect
-        - --innodb_initialized
-      start_period: 15s
-      interval: 30s
-      timeout: 30s
-      retries: 3
+      - POSTGRES_DB=paperless
+      - POSTGRES_USER=paperless
+      - POSTGRES_PASSWORD=paperless
+    stop_grace_period: 1min
+
   paperless_broker:
     container_name: paperless_broker
     image: redis:latest
     restart: unless-stopped
     networks:
-      - paperless
+      - paperless_net
     volumes:
       - /DATA/AppData/$AppID/data:/data
     command:
       - redis-server
       - --save 60 1
       - --loglevel warning
+    stop_grace_period: 1min
+
   paperless_gotenberg:
     container_name: paperless_gotenberg
     image: gotenberg/gotenberg:latest
     restart: unless-stopped
     networks:
-      - paperless
+      - paperless_net
     command:
       - gotenberg
       - --chromium-disable-javascript=true
       - --chromium-allow-list=file:///tmp/.*
+    stop_grace_period: 1min
+
   paperless_tika:
-    container_name: paperless_tike
+    container_name: paperless_tika
     image: apache/tika:latest
     restart: unless-stopped
     networks:
-      - paperless
-networks:
-  paperless:
-    external: true
-    name: paperless
+      - paperless_net
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64

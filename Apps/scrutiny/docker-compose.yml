@@ -1,5 +1,5 @@
----
 name: igorlabs-scrutiny
+
 services:
   scrutiny:
     container_name: scrutiny
@@ -7,8 +7,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     ports:
-      - 2080:8080
-      - 2086:8086
+      - 3030:8080
     volumes:
       - /run/udev:/run/udev:ro
       - /DATA/AppData/$AppID/opt/scrutiny/config:/opt/scrutiny/config
@@ -18,16 +17,8 @@ services:
       - /dev/sdb:/dev/sdb
     cap_add:
       - SYS_RAWIO
-    healthcheck:
-      test:
-        - CMD
-        - curl
-        - -f
-        - http://localhost:8080/api/health
-      start_period: 15s
-      interval: 30s
-      timeout: 30s
-      retries: 3
+    stop_grace_period: 1min
+
 x-casaos:
   architectures:
     - amd64
@@ -37,7 +28,7 @@ x-casaos:
   category: Monitoring
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/scrutiny.png
   index: /
-  port_map: "2080"
+  port_map: "3030"
   scheme: http
   title:
     custom: Scrutiny
