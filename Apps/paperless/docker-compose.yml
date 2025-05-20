@@ -29,7 +29,7 @@ services:
       - PAPERLESS_TIKA_ENABLED=1
       - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://paperless_gotenberg:3000
       - PAPERLESS_TIKA_ENDPOINT=http://paperless_tika:9998
-      - PAPERLESS_TIME_ZONE=America/Sao_Paulo
+      - PAPERLESS_TIME_ZONE=$TZ
       - PAPERLESS_OCR_LANGUAGE=eng
       - PAPERLESS_OCR_LANGUAGEs=por
     stop_grace_period: 60s
