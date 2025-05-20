@@ -1,5 +1,5 @@
+---
 name: igorlabs-homeassistant
-
 services:
   homeassistant:
     container_name: homeassistant
@@ -11,8 +11,7 @@ services:
       - /DATA/AppData/$AppID/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

@@ -1,10 +1,9 @@
+---
 name: igorlabs-manyfold
-
 networks:
   manyfold_net:
     external: true
     name: manyfold_net
-
 services:
   manyfold_app:
     container_name: manyfold_app
@@ -38,8 +37,7 @@ services:
       - DAC_OVERRIDE
       - SETUID
       - SETGID
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   manyfold_database:
     container_name: manyfold_database
     image: postgres:latest
@@ -52,8 +50,7 @@ services:
       - POSTGRES_DB=manyfold
       - POSTGRES_USER=manyfold
       - POSTGRES_PASSWORD=manyfold
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   manyfold_broker:
     container_name: manyfold_broker
     image: redis:latest
@@ -66,8 +63,7 @@ services:
       - redis-server
       - --save 60 1
       - --loglevel warning
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

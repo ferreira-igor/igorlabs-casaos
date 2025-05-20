@@ -1,5 +1,5 @@
+---
 name: igorlabs-esphome
-
 services:
   esphome:
     container_name: esphome
@@ -13,8 +13,7 @@ services:
     environment:
       - PASSWORD=esphome
       - USERNAME=esphome
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

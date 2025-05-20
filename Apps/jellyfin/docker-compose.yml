@@ -1,5 +1,5 @@
+---
 name: igorlabs-jellyfin
-
 services:
   jellyfin:
     container_name: jellyfin
@@ -12,8 +12,7 @@ services:
       - /mnt/exthd/data:/media
     devices:
       - /dev/dri:/dev/dri
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

@@ -1,5 +1,5 @@
+---
 name: igorlabs-scrutiny
-
 services:
   scrutiny:
     container_name: scrutiny
@@ -17,8 +17,7 @@ services:
       - /dev/sdb:/dev/sdb
     cap_add:
       - SYS_RAWIO
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

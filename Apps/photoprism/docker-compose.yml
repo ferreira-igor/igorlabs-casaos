@@ -1,10 +1,9 @@
+---
 name: igorlabs-photoprism
-
 networks:
   photoprism_net:
     external: true
     name: photoprism_net
-
 services:
   photoprism_app:
     container_name: photoprism_app
@@ -34,8 +33,7 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   photoprism_database:
     container_name: photoprism_database
     image: mariadb:lts
@@ -61,8 +59,7 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

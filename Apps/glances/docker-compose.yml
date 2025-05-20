@@ -1,5 +1,5 @@
+---
 name: igorlabs-glances
-
 services:
   glances:
     container_name: glances
@@ -12,8 +12,7 @@ services:
     environment:
       - TZ=$TZ
       - GLANCES_OPT=-w
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

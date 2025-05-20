@@ -1,5 +1,5 @@
+---
 name: igorlabs-diun
-
 services:
   diun:
     container_name: diun
@@ -18,8 +18,7 @@ services:
       - DIUN_NOTIF_TELEGRAM_CHATIDS=
     command:
       - serve
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

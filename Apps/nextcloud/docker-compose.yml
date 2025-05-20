@@ -1,10 +1,9 @@
+---
 name: igorlabs-nextcloud
-
 networks:
   nextcloud_net:
     external: true
     name: nextcloud_net
-
 services:
   nextcloud_app:
     container_name: nextcloud_app
@@ -26,8 +25,7 @@ services:
       - MYSQL_PASSWORD=nextcloud
       - REDIS_HOST=nextcloud_broker
       - REDIS_HOST_PASSWORD=nextcloud
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   nextcloud_database:
     container_name: nextcloud_database
     image: mariadb:lts
@@ -50,8 +48,7 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   nextcloud_broker:
     container_name: nextcloud_broker
     image: redis:latest
@@ -65,8 +62,7 @@ services:
       - --save 60 1
       - --loglevel warning
       - --requirepass nextcloud
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

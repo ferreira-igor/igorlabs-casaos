@@ -1,10 +1,9 @@
+---
 name: igorlabs-prowlarr
-
 networks:
   arr_net:
     external: true
     name: arr_net
-
 services:
   prowlarr:
     container_name: prowlarr
@@ -20,8 +19,7 @@ services:
       - TZ=$TZ
       - PUID=$PUID
       - PGID=$PGID
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

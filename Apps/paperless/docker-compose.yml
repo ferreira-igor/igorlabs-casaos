@@ -1,10 +1,9 @@
+---
 name: igorlabs-paperless
-
 networks:
   paperless_net:
     external: true
     name: paperless_net
-
 services:
   paperless_app:
     container_name: paperless_app
@@ -33,8 +32,7 @@ services:
       - PAPERLESS_TIME_ZONE=America/Sao_Paulo
       - PAPERLESS_OCR_LANGUAGE=eng
       - PAPERLESS_OCR_LANGUAGEs=por
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   paperless_database:
     container_name: paperless_database
     image: postgres:latest
@@ -47,8 +45,7 @@ services:
       - POSTGRES_DB=paperless
       - POSTGRES_USER=paperless
       - POSTGRES_PASSWORD=paperless
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   paperless_broker:
     container_name: paperless_broker
     image: redis:latest
@@ -61,8 +58,7 @@ services:
       - redis-server
       - --save 60 1
       - --loglevel warning
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   paperless_gotenberg:
     container_name: paperless_gotenberg
     image: gotenberg/gotenberg:latest
@@ -73,16 +69,14 @@ services:
       - gotenberg
       - --chromium-disable-javascript=true
       - --chromium-allow-list=file:///tmp/.*
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
   paperless_tika:
     container_name: paperless_tika
     image: apache/tika:latest
     restart: unless-stopped
     networks:
       - paperless_net
-    stop_grace_period: 1min
-
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64
