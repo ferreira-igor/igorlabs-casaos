@@ -4,6 +4,11 @@ services:
   diun:
     container_name: diun
     image: ghcr.io/crazy-max/diun:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: bridge
     volumes:
@@ -18,7 +23,6 @@ services:
       - DIUN_NOTIF_TELEGRAM_CHATIDS=
     command:
       - serve
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

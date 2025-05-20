@@ -4,6 +4,11 @@ services:
   watchyourlan:
     container_name: watchyourlan
     image: ghcr.io/aceberg/watchyourlan:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -11,7 +16,6 @@ services:
     environment:
       - TZ=$TZ
       - IFACES="enp2s0"
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

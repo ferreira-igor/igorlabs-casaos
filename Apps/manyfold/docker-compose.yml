@@ -8,6 +8,11 @@ services:
   manyfold_app:
     container_name: manyfold_app
     image: ghcr.io/manyfold3d/manyfold:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - manyfold_net
@@ -37,10 +42,14 @@ services:
       - DAC_OVERRIDE
       - SETUID
       - SETGID
-    stop_grace_period: 60s
   manyfold_database:
     container_name: manyfold_database
     image: postgres:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - manyfold_net
@@ -50,10 +59,14 @@ services:
       - POSTGRES_DB=manyfold
       - POSTGRES_USER=manyfold
       - POSTGRES_PASSWORD=manyfold
-    stop_grace_period: 60s
   manyfold_broker:
     container_name: manyfold_broker
     image: redis:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - manyfold_net
@@ -63,7 +76,6 @@ services:
       - redis-server
       - --save 60 1
       - --loglevel warning
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

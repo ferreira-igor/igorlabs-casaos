@@ -8,6 +8,11 @@ services:
   paperless_app:
     container_name: paperless_app
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     depends_on:
       - paperless_database
@@ -32,10 +37,14 @@ services:
       - PAPERLESS_TIME_ZONE=$TZ
       - PAPERLESS_OCR_LANGUAGE=eng
       - PAPERLESS_OCR_LANGUAGEs=por
-    stop_grace_period: 60s
   paperless_database:
     container_name: paperless_database
     image: postgres:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - paperless_net
@@ -45,10 +54,14 @@ services:
       - POSTGRES_DB=paperless
       - POSTGRES_USER=paperless
       - POSTGRES_PASSWORD=paperless
-    stop_grace_period: 60s
   paperless_broker:
     container_name: paperless_broker
     image: redis:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - paperless_net
@@ -58,10 +71,14 @@ services:
       - redis-server
       - --save 60 1
       - --loglevel warning
-    stop_grace_period: 60s
   paperless_gotenberg:
     container_name: paperless_gotenberg
     image: gotenberg/gotenberg:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - paperless_net
@@ -69,14 +86,17 @@ services:
       - gotenberg
       - --chromium-disable-javascript=true
       - --chromium-allow-list=file:///tmp/.*
-    stop_grace_period: 60s
   paperless_tika:
     container_name: paperless_tika
     image: apache/tika:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - paperless_net
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

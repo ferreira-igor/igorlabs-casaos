@@ -4,6 +4,11 @@ services:
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     privileged: true
     network_mode: host
@@ -11,7 +16,6 @@ services:
       - /DATA/AppData/$AppID/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

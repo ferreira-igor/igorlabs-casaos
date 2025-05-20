@@ -4,6 +4,11 @@ services:
   metube:
     container_name: metube
     image: ghcr.io/alexta69/metube:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: bridge
     ports:
@@ -14,7 +19,6 @@ services:
       - UID=$PUID
       - GID=$PGID
       - CUSTOM_DIRS=false
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

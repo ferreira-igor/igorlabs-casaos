@@ -4,6 +4,11 @@ services:
   scrutiny:
     container_name: scrutiny
     image: ghcr.io/analogj/scrutiny:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: bridge
     ports:
@@ -17,7 +22,6 @@ services:
       - /dev/sdb:/dev/sdb
     cap_add:
       - SYS_RAWIO
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

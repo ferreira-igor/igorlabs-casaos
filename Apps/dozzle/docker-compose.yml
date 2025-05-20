@@ -8,13 +8,13 @@ services:
       resources:
         limits:
           memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: bridge
     ports:
       - 2020:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

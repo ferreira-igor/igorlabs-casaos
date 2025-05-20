@@ -8,6 +8,11 @@ services:
   nextcloud_app:
     container_name: nextcloud_app
     image: nextcloud:31
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - nextcloud_net
@@ -25,10 +30,14 @@ services:
       - MYSQL_PASSWORD=nextcloud
       - REDIS_HOST=nextcloud_broker
       - REDIS_HOST_PASSWORD=nextcloud
-    stop_grace_period: 60s
   nextcloud_database:
     container_name: nextcloud_database
     image: mariadb:lts
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - nextcloud_net
@@ -48,10 +57,14 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 60s
   nextcloud_broker:
     container_name: nextcloud_broker
     image: redis:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - nextcloud_net
@@ -62,7 +75,6 @@ services:
       - --save 60 1
       - --loglevel warning
       - --requirepass nextcloud
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

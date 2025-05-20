@@ -4,6 +4,11 @@ services:
   esphome:
     container_name: esphome
     image: ghcr.io/esphome/esphome:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     privileged: true
     network_mode: host
@@ -13,7 +18,6 @@ services:
     environment:
       - PASSWORD=esphome
       - USERNAME=esphome
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

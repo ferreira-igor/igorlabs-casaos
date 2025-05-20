@@ -4,6 +4,11 @@ services:
   glances:
     container_name: glances
     image: nicolargo/glances:latest-full
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -12,7 +17,6 @@ services:
     environment:
       - TZ=$TZ
       - GLANCES_OPT=-w
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

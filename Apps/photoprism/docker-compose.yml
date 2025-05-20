@@ -8,6 +8,11 @@ services:
   photoprism_app:
     container_name: photoprism_app
     image: photoprism/photoprism:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - photoprism_net
@@ -33,10 +38,14 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 60s
   photoprism_database:
     container_name: photoprism_database
     image: mariadb:lts
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - photoprism_net
@@ -59,7 +68,6 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64

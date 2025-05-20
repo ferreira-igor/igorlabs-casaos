@@ -8,6 +8,11 @@ services:
   qbittorrent:
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
     restart: unless-stopped
     networks:
       - arr_net
@@ -35,7 +40,6 @@ services:
       - NET_ADMIN
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64
