@@ -9,7 +9,7 @@ services:
       - 2020:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    stop_grace_period: 1min
+    stop_grace_period: 60s
 x-casaos:
   architectures:
     - amd64
