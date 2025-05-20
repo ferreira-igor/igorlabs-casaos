@@ -20,7 +20,7 @@ x-casaos:
   main: glances
   developer: nicolargo.github.io
   category: Monitoring
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/dozzle.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/glances.png
   index: /
   port_map: "61208"
   scheme: http
