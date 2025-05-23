@@ -22,7 +22,7 @@ services:
       - manyfold_database
       - manyfold_broker
     volumes:
-      - /DATA/AppData/$AppID/models:/models
+      - /DATA/Gallery/Models:/models
     environment:
       - DATABASE_ADAPTER=postgresql
       - DATABASE_HOST=manyfold_database

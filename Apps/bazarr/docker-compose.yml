@@ -20,7 +20,7 @@ services:
       - 6767:6767
     volumes:
       - /DATA/AppData/$AppID/config:/config
-      - /mnt/exthd/data:/data
+      - /DATA/Media:/media
     environment:
       - TZ=$TZ
       - PUID=$PUID

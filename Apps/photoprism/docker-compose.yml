@@ -23,7 +23,7 @@ services:
     volumes:
       - /DATA/AppData/$AppID/storage:/photoprism/storage
       - /DATA/AppData/$AppID/import:/photoprism/import
-      - /DATA/AppData/$AppID/originals:/photoprism/originals
+      - /DATA/Gallery/Originals:/photoprism/originals
     environment:
       - PHOTOPRISM_ADMIN_USER=admin
       - PHOTOPRISM_ADMIN_PASSWORD=insecure

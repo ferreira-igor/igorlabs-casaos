@@ -1,0 +1,80 @@
+---
+name: igorlabs-romm
+networks:
+  romm_net:
+    external: true
+    name: romm_net
+services:
+  romm_app:
+    container_name: romm_app
+    image: rommapp/romm:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
+    restart: unless-stopped
+    networks:
+      - romm_net
+    ports:
+      - 3080:8080
+    depends_on:
+      - romm_database
+    environment:
+      - DB_HOST=romm_database
+      - DB_NAME=romm
+      - DB_USER=romm
+      - DB_PASSWD=romm
+      - ROMM_AUTH_SECRET_KEY=
+      - IGDB_CLIENT_ID=
+      - IGDB_CLIENT_SECRET=
+      - SCREENSCRAPER_USER=
+      - SCREENSCRAPER_PASSWORD=
+      - STEAMGRIDDB_API_KEY=
+    volumes:
+      - /DATA/AppData/$AppID/redis-data:/redis-data
+      - /DATA/AppData/$AppID/config:/romm/config
+      - /DATA/AppData/$AppID/resources:/romm/resources
+      - /DATA/AppData/$AppID/assets:/romm/assets
+      - /DATA/Media/roms:/romm/library
+  romm_database:
+    container_name: romm_database
+    image: mariadb:lts
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    stop_grace_period: 5m
+    restart: unless-stopped
+    networks:
+      - romm_net
+    volumes:
+      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+    environment:
+      - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_ROOT_PASSWORD=insecure
+      - MARIADB_DATABASE=romm
+      - MARIADB_USER=romm
+      - MARIADB_PASSWORD=romm
+    command:
+      - --innodb-buffer-pool-size=512M
+      - --transaction-isolation=READ-COMMITTED
+      - --log-bin=binlog
+      - --binlog-format=ROW
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: romm_app
+  developer: romm.app
+  category: Games
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/romm.png
+  index: /
+  port_map: "3080"
+  scheme: http
+  title:
+    custom: Romm
+    en_us: Romm

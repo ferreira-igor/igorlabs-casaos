@@ -14,7 +14,7 @@ services:
     volumes:
       - /DATA/AppData/$AppID/config:/config
       - /DATA/AppData/$AppID/cache:/cache
-      - /mnt/exthd/data:/media
+      - /DATA/Media:/media
     devices:
       - /dev/dri:/dev/dri
 x-casaos:

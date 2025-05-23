@@ -20,7 +20,7 @@ services:
       - 8989:8989
     volumes:
       - /DATA/AppData/$AppID/config:/config
-      - /mnt/exthd/data:/data
+      - /DATA/Media:/media
     environment:
       - TZ=$TZ
       - PUID=$PUID
