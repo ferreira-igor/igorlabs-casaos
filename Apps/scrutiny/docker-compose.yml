@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     ports:
-      - 3030:8080
+      - 4040:8080
     volumes:
       - /run/udev:/run/udev:ro
       - /DATA/AppData/$AppID/opt/scrutiny/config:/opt/scrutiny/config
@@ -31,7 +31,7 @@ x-casaos:
   category: Monitoring
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/scrutiny.png
   index: /
-  port_map: "3030"
+  port_map: "4040"
   scheme: http
   title:
     custom: Scrutiny

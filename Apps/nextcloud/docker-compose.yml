@@ -17,7 +17,7 @@ services:
     networks:
       - nextcloud_net
     ports:
-      - 4040:80
+      - 2080:80
     depends_on:
       - nextcloud_database
       - nextcloud_broker

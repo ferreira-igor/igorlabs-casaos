@@ -17,7 +17,7 @@ services:
     networks:
       - romm_net
     ports:
-      - 3080:8080
+      - 3030:8080
     depends_on:
       - romm_database
     environment:
@@ -73,7 +73,7 @@ x-casaos:
   category: Games
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/romm.png
   index: /
-  port_map: "3080"
+  port_map: "3030"
   scheme: http
   title:
     custom: Romm
