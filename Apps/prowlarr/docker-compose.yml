@@ -1,0 +1,39 @@
+---
+
+name: igorlabs-prowlarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 9696:9696
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: prowlarr
+  developer: prowlarr.com
+  category: Downloads
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/prowlarr.png
+  index: /
+  port_map: "9696"
+  scheme: http
+  title:
+    custom: Prowlarr
+    en_us: Prowlarr

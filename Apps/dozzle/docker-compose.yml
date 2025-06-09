@@ -1,0 +1,29 @@
+---
+
+name: igorlabs-dozzle
+
+services:
+  dozzle:
+    container_name: dozzle
+    image: ghcr.io/amir20/dozzle:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 2020:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: dozzle
+  developer: dozzle.dev
+  category: Logs
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/dozzle.png
+  index: /
+  port_map: "2020"
+  scheme: http
+  title:
+    custom: Dozzle
+    en_us: Dozzle

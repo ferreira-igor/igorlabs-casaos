@@ -1,0 +1,40 @@
+---
+
+name: igorlabs-radarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  radarr:
+    container_name: radarr
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 7878:7878
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: radarr
+  developer: radarr.video
+  category: Movies
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/radarr.png
+  index: /
+  port_map: "7878"
+  scheme: http
+  title:
+    custom: Radarr
+    en_us: Radarr

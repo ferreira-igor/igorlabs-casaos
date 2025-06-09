@@ -1,0 +1,40 @@
+---
+
+name: igorlabs-readarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  readarr:
+    container_name: readarr
+    image: lscr.io/linuxserver/readarr:develop
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 8787:8787
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: readarr
+  developer: readarr.com
+  category: Books
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/readarr.png
+  index: /
+  port_map: "8787"
+  scheme: http
+  title:
+    custom: Readarr
+    en_us: Readarr

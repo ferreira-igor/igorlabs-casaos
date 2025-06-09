@@ -1,0 +1,40 @@
+---
+
+name: igorlabs-sonarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 8989:8989
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: sonarr
+  developer: sonarr.tv
+  category: Television
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/sonarr.png
+  index: /
+  port_map: "8989"
+  scheme: http
+  title:
+    custom: Sonarr
+    en_us: Sonarr

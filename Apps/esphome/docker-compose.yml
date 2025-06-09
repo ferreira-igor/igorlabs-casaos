@@ -1,0 +1,32 @@
+---
+
+name: igorlabs-esphome
+
+services:
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome:latest
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PASSWORD=esphome
+      - USERNAME=esphome
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: esphome
+  developer: esphome.io
+  category: Automation
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/esphome.png
+  index: /
+  port_map: "6052"
+  scheme: http
+  title:
+    custom: ESPHome
+    en_us: ESPHome

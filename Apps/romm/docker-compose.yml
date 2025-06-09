@@ -1,0 +1,72 @@
+---
+
+name: igorlabs-romm
+
+networks:
+  romm_net:
+    name: romm_net
+    external: true
+
+services:
+  romm_app:
+    container_name: romm_app
+    image: rommapp/romm:latest
+    restart: unless-stopped
+    networks:
+      - romm_net
+    ports:
+      - 6060:8080
+    depends_on:
+      - romm_database
+    environment:
+      - DB_HOST=romm_database
+      - DB_NAME=romm
+      - DB_USER=romm
+      - DB_PASSWD=romm
+      - ROMM_AUTH_SECRET_KEY=
+      - SCREENSCRAPER_USER=
+      - SCREENSCRAPER_PASSWORD=
+    volumes:
+      - /DATA/AppData/$AppID/redis-data:/redis-data
+      - /DATA/AppData/$AppID/romm/config:/romm/config
+      - /DATA/AppData/$AppID/romm/resources:/romm/resources
+      - /DATA/AppData/$AppID/romm/assets:/romm/assets
+      - /DATA/AppData/$AppID/romm/library:/romm/library
+
+  romm_database:
+    container_name: romm_database
+    image: mariadb:lts
+    restart: unless-stopped
+    networks:
+      - romm_net
+    volumes:
+      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+    environment:
+      - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_ROOT_PASSWORD=insecure
+      - MARIADB_DATABASE=romm
+      - MARIADB_USER=romm
+      - MARIADB_PASSWORD=romm
+    command:
+      - --innodb-buffer-pool-size=512M
+      - --transaction-isolation=READ-COMMITTED
+      - --log-bin=binlog
+      - --binlog-format=ROW
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: romm_app
+  developer: romm.app
+  category: Games
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/romm.png
+  index: /
+  port_map: "6060"
+  scheme: http
+  title:
+    custom: RomM
+    en_us: RomM

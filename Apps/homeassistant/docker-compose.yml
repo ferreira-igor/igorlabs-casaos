@@ -1,0 +1,30 @@
+---
+
+name: igorlabs-homeassistant
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:latest
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: homeassistant
+  developer: home-assistant.io
+  category: Automation
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/home-assistant.png
+  index: /
+  port_map: "8123"
+  scheme: http
+  title:
+    custom: Home Assistant
+    en_us: Home Assistant

@@ -1,0 +1,40 @@
+---
+
+name: igorlabs-lidarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  lidarr:
+    container_name: lidarr
+    image: lscr.io/linuxserver/lidarr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 8686:8686
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: lidarr
+  developer: lidarr.audio
+  category: Music
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/lidarr.png
+  index: /
+  port_map: "8686"
+  scheme: http
+  title:
+    custom: Lidarr
+    en_us: Lidarr

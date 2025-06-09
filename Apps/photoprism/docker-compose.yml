@@ -1,0 +1,81 @@
+---
+
+name: igorlabs-photoprism
+
+networks:
+  photoprism_net:
+    name: photoprism_net
+    external: true
+
+services:
+  photoprism_app:
+    container_name: photoprism_app
+    image: photoprism/photoprism:latest
+    restart: unless-stopped
+    networks:
+      - photoprism_net
+    ports:
+      - 2342:2342
+    depends_on:
+      - photoprism_database
+    volumes:
+      - /DATA/AppData/$AppID/photoprism/storage:/photoprism/storage
+      - /DATA/Gallery/photoprism/import:/photoprism/import
+      - /DATA/Gallery/photoprism/originals:/photoprism/originals
+    environment:
+      - PHOTOPRISM_UID=$PUID
+      - PHOTOPRISM_GID=$PGID
+      - PHOTOPRISM_ADMIN_USER=admin
+      - PHOTOPRISM_ADMIN_PASSWORD=insecure
+      - PHOTOPRISM_UPLOAD_NSFW=true
+      - PHOTOPRISM_DATABASE_DRIVER=mysql
+      - PHOTOPRISM_DATABASE_SERVER=photoprism_database:3306
+      - PHOTOPRISM_DATABASE_NAME=photoprism
+      - PHOTOPRISM_DATABASE_USER=photoprism
+      - PHOTOPRISM_DATABASE_PASSWORD=photoprism
+    devices:
+      - /dev/dri:/dev/dri
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+
+  photoprism_database:
+    container_name: photoprism_database
+    image: mariadb:lts
+    restart: unless-stopped
+    networks:
+      - photoprism_net
+    volumes:
+      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+    environment:
+      - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_ROOT_PASSWORD=insecure
+      - MARIADB_DATABASE=photoprism
+      - MARIADB_USER=photoprism
+      - MARIADB_PASSWORD=photoprism
+    command:
+      - --innodb-buffer-pool-size=512M
+      - --transaction-isolation=READ-COMMITTED
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max-connections=512
+      - --innodb-rollback-on-timeout=OFF
+      - --innodb-lock-wait-timeout=120
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: photoprism_app
+  developer: photoprism.app
+  category: Photos
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/photoprism.png
+  index: /
+  port_map: "2342"
+  scheme: http
+  title:
+    custom: Photoprism
+    en_us: Photoprism

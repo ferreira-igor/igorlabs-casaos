@@ -1,0 +1,30 @@
+---
+
+name: igorlabs-watchyourlan
+
+services:
+  watchyourlan:
+    container_name: watchyourlan
+    image: ghcr.io/aceberg/watchyourlan:latest
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /DATA/AppData/$AppID/data/WatchYourLAN:/data/WatchYourLAN
+    environment:
+      - TZ=$TZ
+      - IFACES=enp9s0
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: watchyourlan
+  developer: aceberg
+  category: Monitoring
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/watchyourlan.png
+  index: /
+  port_map: "8840"
+  scheme: http
+  title:
+    custom: WatchYourLAN
+    en_us: WatchYourLAN

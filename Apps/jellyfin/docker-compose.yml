@@ -1,0 +1,42 @@
+---
+
+name: igorlabs-jellyfin
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 8096:8096
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+    devices:
+      - /dev/dri:/dev/dri
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: jellyfin
+  developer: jellyfin.org
+  category: Streaming
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/jellyfin.png
+  index: /
+  port_map: "8096"
+  scheme: http
+  title:
+    custom: Jellyfin
+    en_us: Jellyfin

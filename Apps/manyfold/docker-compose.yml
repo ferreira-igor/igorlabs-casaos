@@ -1,0 +1,43 @@
+---
+
+name: igorlabs-manyfold
+
+services:
+  manyfold:
+    container_name: manyfold
+    image: ghcr.io/manyfold3d/manyfold-solo:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 3214:3214
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /DATA/Gallery/Models:/models
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - SECRET_KEY_BASE=
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETUID
+      - SETGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: manyfold
+  developer: manyfold.app
+  category: 3D Printing
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/manyfold.png
+  index: /
+  port_map: "3214"
+  scheme: http
+  title:
+    custom: Manyfold
+    en_us: Manyfold

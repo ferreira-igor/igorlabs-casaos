@@ -1,0 +1,38 @@
+---
+
+name: igorlabs-diun
+
+services:
+  diun:
+    container_name: diun
+    image: ghcr.io/crazy-max/diun:latest
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - TZ=$TZ
+      - DIUN_PROVIDERS_DOCKER=true
+      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
+      - DIUN_WATCH_SCHEDULE=0 */6 * * *
+      - DIUN_NOTIF_TELEGRAM_TOKEN=
+      - DIUN_NOTIF_TELEGRAM_CHATIDS=
+    command:
+      - serve
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: diun
+  developer: crazymax.dev
+  category: Updates
+  hostname: crazymax.dev
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/diun.png
+  index: /diun
+  port_map: ""
+  scheme: https
+  title:
+    custom: Diun
+    en_us: Diun

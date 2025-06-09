@@ -1,0 +1,54 @@
+---
+
+name: igorlabs-qbittorrent
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 8080:8080
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+      - WEBUI_PORTS=8080/tcp,8080/udp
+      - VPN_ENABLED=true
+      - VPN_PROVIDER=generic
+      - VPN_CONF=wgcf-profile
+      - VPN_FIREWALL_TYPE=auto
+      - VPN_LAN_NETWORK=192.168.0.0/24,100.0.0.0/8
+      - VPN_AUTO_PORT_FORWARD=false
+      - PRIVOXY_ENABLED=false
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: qbittorrent
+  developer: qbittorrent.org
+  category: Downloads
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/qbittorrent.png
+  index: /
+  port_map: "8080"
+  scheme: http
+  title:
+    custom: qBittorrent
+    en_us: qBittorrent

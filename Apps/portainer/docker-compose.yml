@@ -1,0 +1,30 @@
+---
+
+name: igorlabs-portainer
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 9443:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /DATA/AppData/$AppID/data:/data
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: portainer
+  developer: portainer.io
+  category: Docker
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/portainer.png
+  index: /
+  port_map: "9443"
+  scheme: https
+  title:
+    custom: Portainer CE
+    en_us: Portainer CE

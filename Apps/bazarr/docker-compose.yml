@@ -1,0 +1,40 @@
+---
+
+name: igorlabs-bazarr
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  bazarr:
+    container_name: bazarr
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    ports:
+      - 6767:6767
+    volumes:
+      - /DATA/AppData/$AppID/config:/config
+      - /mnt/exthd/media:/media
+    environment:
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: bazarr
+  developer: bazarr.media
+  category: Subtitles
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/bazarr.png
+  index: /
+  port_map: "6767"
+  scheme: http
+  title:
+    custom: Bazarr
+    en_us: Bazarr
