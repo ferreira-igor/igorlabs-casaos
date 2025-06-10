@@ -11,13 +11,8 @@ services:
     volumes:
       - /DATA/AppData/igorlabs-diun/data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - TZ=America/Sao_Paulo
-      - DIUN_PROVIDERS_DOCKER=true
-      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
-      - DIUN_WATCH_SCHEDULE=0 */6 * * *
-      - DIUN_NOTIF_TELEGRAM_TOKEN=
-      - DIUN_NOTIF_TELEGRAM_CHATIDS=
+    env_file:
+      - /DATA/AppData/igorlabs-diun/diun.env
     command:
       - serve
     deploy:
