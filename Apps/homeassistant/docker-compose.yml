@@ -13,6 +13,10 @@ services:
       - /DATA/AppData/igorlabs-homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:

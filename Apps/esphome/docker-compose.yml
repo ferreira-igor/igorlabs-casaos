@@ -15,7 +15,10 @@ services:
     environment:
       - USERNAME=admin
       - PASSWORD=esphome
-
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:

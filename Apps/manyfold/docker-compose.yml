@@ -26,6 +26,10 @@ services:
       - DAC_OVERRIDE
       - SETUID
       - SETGID
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:

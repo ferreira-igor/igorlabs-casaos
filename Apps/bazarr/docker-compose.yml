@@ -23,6 +23,10 @@ services:
       - TZ=America/Sao_Paulo
       - PUID=1000
       - PGID=1000
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:

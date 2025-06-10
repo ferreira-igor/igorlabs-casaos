@@ -37,6 +37,10 @@ services:
       - NET_ADMIN
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:

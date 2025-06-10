@@ -33,6 +33,10 @@ services:
       - /DATA/AppData/igorlabs-romm/romm/resources:/romm/resources
       - /DATA/AppData/igorlabs-romm/romm/assets:/romm/assets
       - /DATA/AppData/igorlabs-romm/romm/library:/romm/library
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   romm_database:
     container_name: romm_database
@@ -56,6 +60,10 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
 x-casaos:
   architectures:
