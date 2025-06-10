@@ -23,16 +23,14 @@ services:
       - DB_NAME=romm
       - DB_USER=romm
       - DB_PASSWD=romm
-      - ROMM_AUTH_SECRET_KEY=
-      - SCREENSCRAPER_USER=
-      - SCREENSCRAPER_PASSWORD=
-      - RETROACHIEVEMENTS_API_KEY=
+    env_file:
+      - /DATA/AppData/_romm/romm_app.env
     volumes:
-      - /DATA/AppData/igorlabs-romm/redis-data:/redis-data
-      - /DATA/AppData/igorlabs-romm/romm/config:/romm/config
-      - /DATA/AppData/igorlabs-romm/romm/resources:/romm/resources
-      - /DATA/AppData/igorlabs-romm/romm/assets:/romm/assets
-      - /DATA/AppData/igorlabs-romm/romm/library:/romm/library
+      - /DATA/AppData/_romm/redis-data:/redis-data
+      - /DATA/AppData/_romm/romm/config:/romm/config
+      - /DATA/AppData/_romm/romm/resources:/romm/resources
+      - /DATA/AppData/_romm/romm/assets:/romm/assets
+      - /DATA/AppData/_romm/romm/library:/romm/library
     deploy:
       resources:
         limits:
@@ -45,7 +43,7 @@ services:
     networks:
       - romm_net
     volumes:
-      - /DATA/AppData/igorlabs-romm/var/lib/mysql:/var/lib/mysql
+      - /DATA/AppData/_romm/var/lib/mysql:/var/lib/mysql
     environment:
       - MARIADB_AUTO_UPGRADE=1
       - MARIADB_ROOT_PASSWORD=insecure
