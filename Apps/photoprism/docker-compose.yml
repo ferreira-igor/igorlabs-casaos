@@ -19,12 +19,12 @@ services:
     depends_on:
       - photoprism_database
     volumes:
-      - /DATA/AppData/$AppID/photoprism/storage:/photoprism/storage
+      - /DATA/AppData/igorlabs-photoprism/photoprism/storage:/photoprism/storage
       - /DATA/Gallery/photoprism/import:/photoprism/import
       - /DATA/Gallery/photoprism/originals:/photoprism/originals
     environment:
-      - PHOTOPRISM_UID=$PUID
-      - PHOTOPRISM_GID=$PGID
+      - PHOTOPRISM_UID=1000
+      - PHOTOPRISM_GID=1000
       - PHOTOPRISM_ADMIN_USER=admin
       - PHOTOPRISM_ADMIN_PASSWORD=insecure
       - PHOTOPRISM_UPLOAD_NSFW=true
@@ -46,7 +46,7 @@ services:
     networks:
       - photoprism_net
     volumes:
-      - /DATA/AppData/$AppID/var/lib/mysql:/var/lib/mysql
+      - /DATA/AppData/igorlabs-photoprism/var/lib/mysql:/var/lib/mysql
     environment:
       - MARIADB_AUTO_UPGRADE=1
       - MARIADB_ROOT_PASSWORD=insecure

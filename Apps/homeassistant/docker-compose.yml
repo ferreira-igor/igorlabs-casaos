@@ -10,7 +10,7 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/igorlabs-homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
 

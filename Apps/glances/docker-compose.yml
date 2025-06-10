@@ -12,7 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/os-release:/etc/os-release:ro
     environment:
-      - TZ=$TZ
+      - TZ=America/Sao_Paulo
       - GLANCES_OPT=-w
 
 x-casaos:

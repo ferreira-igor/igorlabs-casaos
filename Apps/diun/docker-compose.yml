@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - /DATA/AppData/$AppID/data:/data
+      - /DATA/AppData/igorlabs-diun/data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - TZ=$TZ

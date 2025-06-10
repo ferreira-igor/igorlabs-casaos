@@ -10,11 +10,12 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/igorlabs-esphome/config:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
+      - USERNAME=admin
       - PASSWORD=esphome
-      - USERNAME=esphome
+
 
 x-casaos:
   architectures:

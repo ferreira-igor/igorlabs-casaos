@@ -12,8 +12,8 @@ services:
       - 5050:8080
     volumes:
       - /run/udev:/run/udev:ro
-      - /DATA/AppData/$AppID/opt/scrutiny/config:/opt/scrutiny/config
-      - /DATA/AppData/$AppID/opt/scrutiny/influxdb:/opt/scrutiny/influxdb
+      - /DATA/AppData/igorlabs-scrutiny/opt/scrutiny/config:/opt/scrutiny/config
+      - /DATA/AppData/igorlabs-scrutiny/opt/scrutiny/influxdb:/opt/scrutiny/influxdb
     devices:
       - /dev/sda:/dev/sda
       - /dev/sdb:/dev/sdb

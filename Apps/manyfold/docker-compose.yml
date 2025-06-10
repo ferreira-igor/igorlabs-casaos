@@ -11,11 +11,11 @@ services:
     ports:
       - 3214:3214
     volumes:
-      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/igorlabs-manyfold/config:/config
       - /DATA/Gallery/Models:/models
     environment:
-      - PUID=$PUID
-      - PGID=$PGID
+      - PUID=1000
+      - PGID=1000
       - SECRET_KEY_BASE=
     security_opt:
       - no-new-privileges:true

@@ -17,11 +17,11 @@ services:
     ports:
       - 9696:9696
     volumes:
-      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/igorlabs-prowlarr/config:/config
     environment:
-      - TZ=$TZ
-      - PUID=$PUID
-      - PGID=$PGID
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
 
 x-casaos:
   architectures:

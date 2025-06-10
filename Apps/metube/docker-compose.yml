@@ -13,8 +13,8 @@ services:
     volumes:
       - /DATA/Downloads:/downloads
     environment:
-      - UID=$PUID
-      - GID=$PGID
+      - UID=1000
+      - GID=1000
       - CUSTOM_DIRS=false
 
 x-casaos:

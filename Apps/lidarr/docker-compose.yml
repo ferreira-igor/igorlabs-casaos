@@ -17,12 +17,12 @@ services:
     ports:
       - 8686:8686
     volumes:
-      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/igorlabs-lidarr/config:/config
       - /mnt/exthd/media:/media
     environment:
-      - TZ=$TZ
-      - PUID=$PUID
-      - PGID=$PGID
+      - TZ=America/Sao_Paulo
+      - PUID=1000
+      - PGID=1000
 
 x-casaos:
   architectures:

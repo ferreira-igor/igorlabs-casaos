@@ -9,9 +9,9 @@ services:
     restart: unless-stopped
     network_mode: host
     volumes:
-      - /DATA/AppData/$AppID/data/WatchYourLAN:/data/WatchYourLAN
+      - /DATA/AppData/igorlabs-watchyourlan/data/WatchYourLAN:/data/WatchYourLAN
     environment:
-      - TZ=$TZ
+      - TZ=America/Sao_Paulo
       - IFACES=enp9s0
 
 x-casaos:
