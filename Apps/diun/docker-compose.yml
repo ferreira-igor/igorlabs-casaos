@@ -1,6 +1,6 @@
 ---
 
-name: _diun
+name: igorlabs_diun
 
 services:
   diun:
