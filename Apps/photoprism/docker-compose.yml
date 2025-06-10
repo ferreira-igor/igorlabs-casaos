@@ -19,7 +19,7 @@ services:
     depends_on:
       - photoprism_database
     volumes:
-      - /DATA/AppData/igorlabs-photoprism/photoprism/storage:/photoprism/storage
+      - /DATA/AppData/_photoprism/photoprism/storage:/photoprism/storage
       - /DATA/Gallery/photoprism/import:/photoprism/import
       - /DATA/Gallery/photoprism/originals:/photoprism/originals
     environment:
@@ -50,7 +50,7 @@ services:
     networks:
       - photoprism_net
     volumes:
-      - /DATA/AppData/igorlabs-photoprism/var/lib/mysql:/var/lib/mysql
+      - /DATA/AppData/_photoprism/var/lib/mysql:/var/lib/mysql
     environment:
       - MARIADB_AUTO_UPGRADE=1
       - MARIADB_ROOT_PASSWORD=insecure
@@ -86,4 +86,3 @@ x-casaos:
   scheme: http
   title:
     custom: Photoprism
-    en_us: Photoprism

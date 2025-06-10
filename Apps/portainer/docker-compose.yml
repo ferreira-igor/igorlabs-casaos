@@ -12,7 +12,7 @@ services:
       - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /DATA/AppData/igorlabs-portainer/data:/data
+      - /DATA/AppData/_portainer/data:/data
     deploy:
       resources:
         limits:
@@ -31,4 +31,3 @@ x-casaos:
   scheme: https
   title:
     custom: Portainer CE
-    en_us: Portainer CE

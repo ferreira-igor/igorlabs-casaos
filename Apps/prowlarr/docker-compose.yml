@@ -17,7 +17,7 @@ services:
     ports:
       - 9696:9696
     volumes:
-      - /DATA/AppData/igorlabs-prowlarr/config:/config
+      - /DATA/AppData/_prowlarr/config:/config
     environment:
       - TZ=America/Sao_Paulo
       - PUID=1000
@@ -40,4 +40,3 @@ x-casaos:
   scheme: http
   title:
     custom: Prowlarr
-    en_us: Prowlarr

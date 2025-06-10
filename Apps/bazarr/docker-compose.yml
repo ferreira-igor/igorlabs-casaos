@@ -17,7 +17,7 @@ services:
     ports:
       - 6767:6767
     volumes:
-      - /DATA/AppData/igorlabs-bazarr/config:/config
+      - /DATA/AppData/_bazarr/config:/config
       - /mnt/exthd/media:/media
     environment:
       - TZ=America/Sao_Paulo
@@ -41,4 +41,3 @@ x-casaos:
   scheme: http
   title:
     custom: Bazarr
-    en_us: Bazarr

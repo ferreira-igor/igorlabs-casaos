@@ -17,7 +17,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /DATA/AppData/igorlabs-qbittorrent/config:/config
+      - /DATA/AppData/_qbittorrent/config:/config
       - /mnt/exthd/media:/media
     environment:
       - TZ=America/Sao_Paulo
@@ -55,4 +55,3 @@ x-casaos:
   scheme: http
   title:
     custom: qBittorrent
-    en_us: qBittorrent

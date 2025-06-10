@@ -17,7 +17,7 @@ services:
     ports:
       - 8686:8686
     volumes:
-      - /DATA/AppData/igorlabs-lidarr/config:/config
+      - /DATA/AppData/_lidarr/config:/config
       - /mnt/exthd/media:/media
     environment:
       - TZ=America/Sao_Paulo
@@ -41,4 +41,3 @@ x-casaos:
   scheme: http
   title:
     custom: Lidarr
-    en_us: Lidarr

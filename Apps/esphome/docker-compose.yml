@@ -10,7 +10,7 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - /DATA/AppData/igorlabs-esphome/config:/config
+      - /DATA/AppData/_esphome/config:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
       - USERNAME=admin
@@ -33,4 +33,3 @@ x-casaos:
   scheme: http
   title:
     custom: ESPHome
-    en_us: ESPHome

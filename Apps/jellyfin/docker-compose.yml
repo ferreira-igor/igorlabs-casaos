@@ -17,7 +17,7 @@ services:
     ports:
       - 8096:8096
     volumes:
-      - /DATA/AppData/igorlabs-jellyfin/config:/config
+      - /DATA/AppData/_jellyfin/config:/config
       - /mnt/exthd/media:/media
     environment:
       - TZ=America/Sao_Paulo
@@ -43,4 +43,3 @@ x-casaos:
   scheme: http
   title:
     custom: Jellyfin
-    en_us: Jellyfin

@@ -10,7 +10,7 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - /DATA/AppData/igorlabs-homeassistant/config:/config
+      - /DATA/AppData/_homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     deploy:
@@ -31,4 +31,3 @@ x-casaos:
   scheme: http
   title:
     custom: Home Assistant
-    en_us: Home Assistant
