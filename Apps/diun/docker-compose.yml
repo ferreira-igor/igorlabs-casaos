@@ -14,7 +14,7 @@ services:
     environment:
       - TZ=$TZ
     env_file:
-      - /DATA/AppData/igorlabs-diun/diun.env
+      - /DATA/AppData/$AppID/diun.env
     command:
       - serve
     deploy:
