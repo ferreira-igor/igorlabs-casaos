@@ -12,9 +12,9 @@ services:
       - /DATA/AppData/igorlabs-diun/data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - TZ=$TZ
+      - TZ=
     env_file:
-      - /DATA/AppData/$AppID/diun.env
+      - /DATA/AppData/igorlabs-diun/diun.env
     command:
       - serve
     deploy:
