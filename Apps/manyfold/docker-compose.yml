@@ -14,8 +14,8 @@ services:
       - /DATA/AppData/_manyfold/config:/config
       - /DATA/Gallery/Models:/models
     environment:
-      PUID=1000
-      PGID=1000
+      - PUID=1000
+      - PGID=1000
     env_file:
       - /DATA/AppData/_manyfold/manyfold.env
     security_opt:
