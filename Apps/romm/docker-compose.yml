@@ -31,10 +31,6 @@ services:
       - /DATA/AppData/_romm/romm/resources:/romm/resources
       - /DATA/AppData/_romm/romm/assets:/romm/assets
       - /DATA/AppData/_romm/romm/library:/romm/library
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
   romm_database:
     container_name: romm_database
@@ -58,10 +54,6 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
 x-casaos:
   architectures:

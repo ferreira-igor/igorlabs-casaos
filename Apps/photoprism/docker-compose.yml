@@ -38,10 +38,6 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
   photoprism_database:
     container_name: photoprism_database
@@ -68,10 +64,6 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
 x-casaos:
   architectures:
