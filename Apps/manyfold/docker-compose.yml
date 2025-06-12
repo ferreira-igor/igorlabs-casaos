@@ -10,7 +10,7 @@ networks:
 services:
   manyfold_app:
     container_name: manyfold_app
-    image: ghcr.io/manyfold3d/manyfold-solo:latest
+    image: ghcr.io/manyfold3d/manyfold:latest
     restart: unless-stopped
     networks:
       - manyfold_net
@@ -26,7 +26,6 @@ services:
       - PGID=1000
       - DATABASE_ADAPTER=postgresql
       - DATABASE_HOST=manyfold_database
-      - DATABASE_PORT=5432
       - DATABASE_NAME=manyfold
       - DATABASE_USER=manyfold
       - DATABASE_PASSWORD=manyfold
