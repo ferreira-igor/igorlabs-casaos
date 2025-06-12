@@ -16,10 +16,6 @@ services:
       - UID=1000
       - GID=1000
       - CUSTOM_DIRS=false
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
 x-casaos:
   architectures:

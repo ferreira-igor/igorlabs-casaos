@@ -19,10 +19,6 @@ services:
       - /dev/sdb:/dev/sdb
     cap_add:
       - SYS_RAWIO
-    deploy:
-      resources:
-        limits:
-          memory: 2G
     healthcheck:
       test:
         - CMD

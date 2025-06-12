@@ -13,10 +13,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /DATA/AppData/_portainer/data:/data
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
 x-casaos:
   architectures:

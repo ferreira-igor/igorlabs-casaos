@@ -13,10 +13,6 @@ services:
     environment:
       - TZ=America/Sao_Paulo
       - IFACES=enp9s0
-    deploy:
-      resources:
-        limits:
-          memory: 2G
 
 x-casaos:
   architectures:
