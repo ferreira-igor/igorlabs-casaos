@@ -20,7 +20,7 @@ services:
       - manyfold_database
       - manyfold_broker
     volumes:
-      - /DATA/Gallery/Models:/models
+      - /DATA/AppData/_manyfold/models:/models
     environment:
       - PUID=1000
       - PGID=1000
