@@ -51,9 +51,6 @@ services:
       - --transaction-isolation=READ-COMMITTED
       - --log-bin=binlog
       - --binlog-format=ROW
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
 
 x-casaos:
   architectures:
