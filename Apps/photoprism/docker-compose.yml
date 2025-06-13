@@ -21,7 +21,7 @@ services:
     volumes:
       - /DATA/AppData/_photoprism/photoprism/storage:/photoprism/storage
       - /DATA/AppData/_photoprism/photoprism/import:/photoprism/import
-      - /DATA/Gallery/photoprism/originals:/photoprism/originals
+      - /DATA/AppData/_photoprism/photoprism/originals:/photoprism/originals
     environment:
       - PHOTOPRISM_UID=1000
       - PHOTOPRISM_GID=1000
