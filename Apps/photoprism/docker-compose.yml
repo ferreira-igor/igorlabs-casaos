@@ -35,9 +35,6 @@ services:
       - PHOTOPRISM_DATABASE_PASSWORD=photoprism
     devices:
       - /dev/dri:/dev/dri
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
 
   photoprism_database:
     container_name: photoprism_database
@@ -61,9 +58,6 @@ services:
       - --max-connections=512
       - --innodb-rollback-on-timeout=OFF
       - --innodb-lock-wait-timeout=120
-    security_opt:
-      - seccomp:unconfined
-      - apparmor:unconfined
 
 x-casaos:
   architectures:
