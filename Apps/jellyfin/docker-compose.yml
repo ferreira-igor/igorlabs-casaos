@@ -2,27 +2,16 @@
 
 name: igorlabs-jellyfin
 
-networks:
-  servarr_net:
-    name: servarr_net
-    external: true
-
 services:
   jellyfin:
     container_name: jellyfin
-    image: lscr.io/linuxserver/jellyfin:latest
+    image: ghcr.io/jellyfin/jellyfin:latest
     restart: unless-stopped
-    networks:
-      - servarr_net
-    ports:
-      - 8096:8096
+    network_mode: host
     volumes:
       - /DATA/AppData/_jellyfin/config:/config
+      - /DATA/AppData/_jellyfin/cache:/cache
       - /mnt/exthd/media:/media
-    environment:
-      - TZ=America/Sao_Paulo
-      - PUID=1000
-      - PGID=1000
     devices:
       - /dev/dri:/dev/dri
 
