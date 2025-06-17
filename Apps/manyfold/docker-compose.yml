@@ -32,6 +32,15 @@ services:
       - REDIS_URL=redis://manyfold_broker:6379/1
     env_file:
       - /DATA/AppData/_manyfold/manyfold_app.env
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETUID
+      - SETGID
 
   manyfold_database:
     container_name: manyfold_database
