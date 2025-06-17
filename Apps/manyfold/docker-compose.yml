@@ -42,8 +42,9 @@ services:
     volumes:
       - /DATA/AppData/_manyfold/var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=manyfold
       - POSTGRES_USER=manyfold
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=manyfold
 
   manyfold_broker:
     container_name: manyfold_broker
