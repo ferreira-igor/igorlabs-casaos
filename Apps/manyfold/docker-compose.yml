@@ -2,36 +2,22 @@
 
 name: igorlabs-manyfold
 
-networks:
-  manyfold_net:
-    name: manyfold_net
-    external: true
-
 services:
-  manyfold_app:
-    container_name: manyfold_app
-    image: ghcr.io/manyfold3d/manyfold:latest
+  manyfold:
+    container_name: manyfold
+    image: ghcr.io/manyfold3d/manyfold-solo:latest
     restart: unless-stopped
-    networks:
-      - manyfold_net
+    network_mode: bridge
     ports:
       - 3214:3214
-    depends_on:
-      - manyfold_database
-      - manyfold_broker
     volumes:
+      - /DATA/AppData/_manyfold/config:/config
       - /DATA/AppData/_manyfold/models:/models
     environment:
       - PUID=1000
       - PGID=1000
-      - DATABASE_ADAPTER=postgresql
-      - DATABASE_HOST=manyfold_database
-      - DATABASE_NAME=manyfold
-      - DATABASE_USER=manyfold
-      - DATABASE_PASSWORD=manyfold
-      - REDIS_URL=redis://manyfold_broker:6379/1
     env_file:
-      - /DATA/AppData/_manyfold/manyfold_app.env
+      - /DATA/AppData/_manyfold/manyfold.env
     security_opt:
       - no-new-privileges:true
     cap_drop:
@@ -55,31 +41,11 @@ services:
       timeout: 30s
       retries: 3
 
-  manyfold_database:
-    container_name: manyfold_database
-    image: postgres:latest
-    restart: unless-stopped
-    networks:
-      - manyfold_net
-    volumes:
-      - /DATA/AppData/_manyfold/var/lib/postgresql/data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=manyfold
-      - POSTGRES_USER=manyfold
-      - POSTGRES_PASSWORD=manyfold
-
-  manyfold_broker:
-    container_name: manyfold_broker
-    image: redis:latest
-    restart: unless-stopped
-    networks:
-      - manyfold_net
-
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main: manyfold_app
+  main: manyfold
   developer: manyfold.app
   category: 3D Printing
   icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/manyfold.png
