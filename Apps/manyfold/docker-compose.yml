@@ -18,15 +18,6 @@ services:
       - PGID=1000
     env_file:
       - /DATA/AppData/_manyfold/manyfold.env
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - DAC_OVERRIDE
-      - SETUID
-      - SETGID
     healthcheck:
       test:
         - CMD
