@@ -1,0 +1,31 @@
+---
+
+networks:
+  servarr_net:
+    name: servarr_net
+    external: true
+
+services:
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    networks:
+      - servarr_net
+    environment:
+      - TZ=America/Sao_Paulo
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: flaresolverr
+  developer: FlareSolverr
+  category: Networking
+  hostname: github.com
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/diun.png
+  index: /FlareSolverr/FlareSolverr
+  port_map: ""
+  scheme: https
+  title:
+    custom: FlareSolverr
