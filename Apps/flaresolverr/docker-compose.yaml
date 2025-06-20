@@ -23,7 +23,7 @@ x-casaos:
   developer: FlareSolverr
   category: Networking
   hostname: github.com
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/diun.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/flaresolverr.png
   index: /FlareSolverr/FlareSolverr
   port_map: ""
   scheme: https
