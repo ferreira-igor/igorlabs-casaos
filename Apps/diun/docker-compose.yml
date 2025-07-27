@@ -1,6 +1,6 @@
 ---
 
-name: igorlabs_diun
+name: _diun
 
 services:
   diun:
@@ -11,13 +11,7 @@ services:
     volumes:
       - /DATA/AppData/_diun/data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - TZ=America/Sao_Paulo
-      - DIUN_PROVIDERS_DOCKER=true
-      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
-      - DIUN_WATCH_SCHEDULE=0 */6 * * *
-    env_file:
-      - /DATA/AppData/_diun/diun.env
+    env_file: /DATA/AppData/_diun/env
     command:
       - serve
 
