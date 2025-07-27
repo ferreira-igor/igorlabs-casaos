@@ -1,6 +1,6 @@
 ---
 
-name: igorlabs-romm
+name: _romm
 
 networks:
   romm_net:
@@ -9,6 +9,7 @@ networks:
 
 services:
   romm_app:
+    # Descrição: Aplicação RomM para gerenciamento de ROMs e jogos
     container_name: romm_app
     image: rommapp/romm:latest
     restart: unless-stopped
@@ -19,48 +20,40 @@ services:
     depends_on:
       - romm_database
     environment:
-      - DB_HOST=romm_database
-      - DB_NAME=romm
-      - DB_USER=romm
-      - DB_PASSWD=romm
-    env_file:
-      - /DATA/AppData/_romm/romm_app.env
+      - ENABLE_SCHEDULED_RESCAN=true # Habilita a revarredura agendada
+      - ENABLE_RESCAN_ON_FILESYSTEM_CHANGE=true # Habilita a revarredura ao detectar mudanças no sistema de arquivos
+      - ROMM_DB_DRIVER=mariadb # Driver do banco de dados. Padrão: mariadb
+      - DB_HOST=romm_database # Host do banco de dados. Padrão: romm_database
+      - DB_NAME=${DB_NAME:-romm} # Nome do banco de dados. Padrão: romm
+      - DB_USER=${DB_USER:-romm} # Nome do usuário do banco de dados. Padrão: romm
+      - DB_PASSWD=${DB_PASS:-romm} # Senha do usuário do banco de dados. Padrão: romm
+      - ROMM_AUTH_SECRET_KEY=${AUTH_KEY} # Chave secreta para autenticação. Gerar com o comando `openssl rand -base64 32`
+      - KIOSK_MODE=false # Modo quiosque. Padrão: false
+      - TZ=${TZ:-America/Sao_Paulo} # Fuso horário. Padrão: America/Sao_Paulo
+      - HASHEOUS_API_ENABLED=true # Habilita a API do Hasheous
     volumes:
-      - /DATA/AppData/_romm/redis-data:/redis-data
-      - /DATA/AppData/_romm/romm/config:/romm/config
-      - /DATA/AppData/_romm/romm/resources:/romm/resources
-      - /DATA/AppData/_romm/romm/assets:/romm/assets
-      - /DATA/AppData/_romm/romm/library:/romm/library
-
+      - /DATA/AppData/$AppID/redis-data:/redis-data # Volume para dados do Redis
+      - /DATA/AppData/$AppID/romm/config:/romm/config # Volume para configuração do RomM
+      - /DATA/AppData/$AppID/romm/resources:/romm/resources # Volume para recursos do RomM
+      - /DATA/AppData/$AppID/romm/assets:/romm/assets # Volume para assets do RomM
+      - /DATA/AppData/$AppID/romm/library:/romm/library # Volume para a biblioteca do RomM
   romm_database:
+    # Descrição: Banco de dados MariaDB para o RomM
     container_name: romm_database
-    image: mariadb:lts
+    image: lscr.io/linuxserver/mariadb:latest
     restart: unless-stopped
     networks:
       - romm_net
     volumes:
-      - /DATA/AppData/_romm/var/lib/mysql:/var/lib/mysql
+      - /DATA/AppData/$AppID/config:/config # Volume para configuração do banco de dados
     environment:
-      - MARIADB_AUTO_UPGRADE=1
-      - MARIADB_ROOT_PASSWORD=insecure
-      - MARIADB_DATABASE=romm
-      - MARIADB_USER=romm
-      - MARIADB_PASSWORD=romm
-    command:
-      - --innodb-buffer-pool-size=512M
-      - --transaction-isolation=READ-COMMITTED
-      - --log-bin=binlog
-      - --binlog-format=ROW
-    healthcheck:
-      test:
-        - CMD
-        - healthcheck.sh
-        - --connect
-        - --innodb_initialized
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      - TZ=${TZ:-America/Sao_Paulo} # Fuso horário. Padrão: America/Sao_Paulo
+      - PUID=${PUID:-1000} # ID do usuário. Padrão: 1000
+      - PGID=${PGID:-1000} # ID do grupo. Padrão: 1000
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT:-insecure} # Senha do usuário root do banco de dados. Padrão: insecure
+      - MYSQL_DATABASE=${DB_NAME:-romm} # Nome do banco de dados. Padrão: romm
+      - MYSQL_USER=${DB_USER:-romm} # Nome do usuário do banco de dados. Padrão: romm
+      - MYSQL_PASSWORD=${DB_PASS:-romm} # Senha do usuário do banco de dados. Padrão: romm
 
 x-casaos:
   architectures:
